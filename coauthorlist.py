@@ -55,9 +55,7 @@ def format_affiliation(affiliation, journal="A&A"):
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument(
-        "--filename",
-        "-f",
-        default="coauthorlist.xlsx",
+        "filename",
         help="Input file with author data. Easiest to use are Excel and CSV files",
     )
     parser.add_argument(
@@ -128,6 +126,7 @@ if "Tier" in tbl.columns:
 else:
     nt = 1
     print("No Tier column found. Assuming only one tier")
+print()
 # create one list per tier
 names = [[] for i in range(nt)]
 last_names = [[] for i in range(nt)]
@@ -177,6 +176,7 @@ for i in range(nt):
         acks[i] = [acks[i][j] for j in jsort]
         print(f" - Tier {i+1}, sorted - ")
         print(", ".join(last_names[i]))
+    print()
 names = [name for tier_names in names for name in tier_names]
 last_names = [name for tier_names in last_names for name in tier_names]
 affils = [aff for tier_affils in affils for aff in tier_affils]
