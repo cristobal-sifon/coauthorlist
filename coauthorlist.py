@@ -65,7 +65,7 @@ def parse_args():
         default=[-1],
         help="""Which tiers to sort alphabetically,counting from 1.
 Negative numbers indicate which tiers *not* to sort alphabetically.
-Default means to sort all tiers except the first.""",
+Default  (-1) means to sort all tiers except the first.""",
     )
     parser.add_argument(
         "--orcidlink",
@@ -77,13 +77,13 @@ Default means to sort all tiers except the first.""",
         "--output",
         "-o",
         default="authors.tex",
-        help="filename to write author and affiliation lists (tex A&A format)",
+        help="filename to write author and affiliation lists (tex A&A format; default authors.tex)",
     )
     parser.add_argument(
         "--output-ack",
         "-k",
         default="acknowledgements.tex",
-        help="filename to write acknowledgement list",
+        help="filename to write acknowledgement list (default acknowledgements.tex)",
     )
     args = parser.parse_args()
     assert np.all(np.array(args.alphabetical) < 0) or np.all(
