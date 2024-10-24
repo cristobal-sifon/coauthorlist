@@ -5,9 +5,7 @@ A simple python script to deal with large co-author lists.
 
 Specifically, ``coauthorlist.py`` will automatically sort co-authors alphabetically, possibly in a tiered scheme, and adjust affiliation numbering accordingly.
 
-.. note::
-
-    This code currently only produces A&A-compliant output
+**NOTE:** This code currently only produces A&A-compliant output
 
 Installation
 ------------
@@ -15,9 +13,7 @@ Installation
 Requirements
 ------------
 
-.. note::
-
-    Versions listed are the ones I have installed and therefore the only ones ``coauthorlist.py`` hass been tested with. However, it is simple enough that it should work with any versions, at least reasonably recent ones.
+**NOTE:** Versions listed are the ones I have installed and therefore the only ones ``coauthorlist.py`` hass been tested with. However, it is simple enough that it should work with any versions, at least reasonably recent ones.
 
 * Python 3.11.7 (requres Python 3.x)
 * numpy 1.26.3
@@ -27,9 +23,7 @@ Requirements
 Usage
 -----
 
-.. note::
-
-    ``coauthorlist.py`` reads the co-author list from a table file. The easiest form to get this is to request your co-authors to fill a google form with the required information and then linking the form to a google sheet (upper right corner of the screen). 
+**NOTE:** ``coauthorlist.py`` reads the co-author list from a table file. The easiest form to get this is to request your co-authors to fill a google form with the required information and then linking the form to a google sheet (upper right corner of the screen). 
 
 Download ``coauthorlist.py`` to your desired location and execute
 
