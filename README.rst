@@ -1,7 +1,9 @@
 coauthorlist.py
 ===============
 
-A simple python script to deal with large co-author lists
+A simple python script to deal with large co-author lists.
+
+Specifically, ``coauthorlist.py`` will automatically sort co-authors alphabetically, possibly in a tiered scheme, and adjust affiliation numbering accordingly.
 
 .. note::
 
