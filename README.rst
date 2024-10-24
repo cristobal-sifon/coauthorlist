@@ -31,7 +31,25 @@ Download ``coauthorlist.py`` to your desired location and execute
 
     python coauthorlist.py -h
 
-to get help about the optional command-line arguments. 
+to get help about the optional command-line arguments. The output is copied here for convenience:
+
+.. code-block::
+
+    usage: coauthorlist.py [-h] [--alphabetical [ALPHABETICAL ...]] [--orcidlink] [--output OUTPUT] [--output-ack OUTPUT_ACK] filename
+    
+    positional arguments:
+      filename              Input file with author data. Easiest to use are Excel and CSV files
+    
+    options:
+      -h, --help            show this help message and exit
+      --alphabetical [ALPHABETICAL ...], -a [ALPHABETICAL ...]
+                            Which tiers to sort alphabetically,counting from 1. Negative numbers indicate which tiers *not* to sort
+                            alphabetically. Default (-1) means to sort all tiers except the first.
+      --orcidlink, -l       Use \orcidlink macro instead of custom \orcid macro
+      --output OUTPUT, -o OUTPUT
+                            filename to write author and affiliation lists (tex A&A format; default authors.tex)
+      --output-ack OUTPUT_ACK, -k OUTPUT_ACK
+                            filename to write acknowledgement list (default acknowledgements.tex)
 
 Features
 ---------------
@@ -44,7 +62,7 @@ The author file should contain at least contain columns for:
 
 See `rename_columns()`_ for more information.
 
-In addition, it is possible to have a ``Tier`` column to specify different author tiers; typically there is a first tier of authors sorted by contribution and one (or more) tiers of authors sorted alphabetically. Run :code:`python coauthorlist.py -h` for more information.
+In addition, it is possible to have a ``Tier`` column to specify different author tiers; typically there is a first tier of authors sorted by contribution and one (or more) tiers of authors sorted alphabetically (see help above).
 
 Modifying the source code
 -------------------------
