@@ -69,6 +69,7 @@ This is a string containing acknowledgements that should go before the authors' 
 This is a function to rename cumbersome column names to names that are easier to use within the code. I recommend changing the input names as needed (e.g., change "Latex-formatted name" to what you called the question in the form) but not the output names (e.g., leave "name"), as the latter are used throughout the code.
 
 ``format_affiliation()``
+++++++++++++++++++++++++
 
 This function allows custom formatting according to specific journal requirements, e.g. adding (or removing) the ``\affiliation`` macro.
 
