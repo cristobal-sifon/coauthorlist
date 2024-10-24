@@ -48,7 +48,7 @@ The author file should contain at least contain columns for:
  * **affiliations** with multiple affiliations for the same author separated by semi-colons;
  * **acknowledgements** for each author. Currently this column must exist although it could be completely empty.
 
-See :ref:`renamecols` for more information.
+See `rename_columns()`_ for more information.
 
 In addition, it is possible to have a ``Tier`` column to specify different author tiers; typically there is a first tier of authors sorted by contribution and one (or more) tiers of authors sorted alphabetically. Run :code:`python coauthorlist.py -h` for more information.
 
@@ -62,7 +62,6 @@ Some parts of the source code will have to be modified for every project. These 
 
 This is a string containing acknowledgements that should go before the authors' individual (typically funding) acknowledgements.
 
-.. _renamecols:
 
 ``rename_columns()``
 ++++++++++++++++++++
