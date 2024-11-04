@@ -62,7 +62,7 @@ The author file should contain at least contain columns for:
 
 See `rename_columns()`_ for more information.
 
-In addition, it is possible to have a ``Tier`` column to specify different author tiers; typically there is a first tier of authors sorted by contribution and one (or more) tiers of authors sorted alphabetically (see help above).
+In addition, it is possible to have a ``Tier`` column to specify different author tiers; typically there is a first tier of authors sorted by contribution and one (or more) tiers of authors sorted alphabetically (see help above). Authors whose ``Tier`` column is set to 0 (zero) will not be included in the author list.
 
 Modifying the source code
 -------------------------

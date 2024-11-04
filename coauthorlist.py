@@ -36,15 +36,15 @@ def last_name_index(name):
     return idx
 
 
-def format_affiliation(affiliation, journal="A&A"):
+def format_affiliation(affiliation, journal):
     """Format affiliations following journal requirements. Only A&A implemented so far"""
-    assert journal == "A&A"
     # for generality let's assume there's more than one affiliation
     affiliation = affiliation.split(";")
     for i, aff in enumerate(affiliation):
-        if "\\affiliation" in aff:
-            affiliation[i] = aff[: aff.rfind("}")]
-        affiliation[i] = aff.replace("\\affiliation{", "")
+        if journal == "aap":
+            if "\\affiliation" in aff:
+                affiliation[i] = aff[: aff.rfind("}")]
+            affiliation[i] = aff.replace("\\affiliation{", "")
     # we now merge it into one string
     return ";".join(affiliation)
 
@@ -53,7 +53,10 @@ def format_affiliation(affiliation, journal="A&A"):
 
 
 def parse_args():
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        description="Construct Latex-formatted author list, ordered affiliations, and \
+            acknowledgements from a table. See README.rst for more information."
+    )
     parser.add_argument(
         "filename",
         help="Input file with author data. Easiest to use are Excel and CSV files",
@@ -67,6 +70,13 @@ def parse_args():
         help="""Which tiers to sort alphabetically,counting from 1.
 Negative numbers indicate which tiers *not* to sort alphabetically.
 Default  (-1) means to sort all tiers except the first.""",
+    )
+    parser.add_argument(
+        "--journal",
+        "-j",
+        default="aap",
+        help="Journal style (using AASTeX abbreviation). Only A&A (aap) implemented so far.",
+        choices=["aap"],
     )
     parser.add_argument(
         "--orcidlink",
@@ -90,7 +100,8 @@ Default  (-1) means to sort all tiers except the first.""",
     print(args.alphabetical)
     assert np.all(np.array(args.alphabetical) < 0) or np.all(
         np.array(args.alphabetical) > 0
-    ), "Alphabetical tiers must be defined only through those which are alphabetical (positive) or only through those that are not alphabetical (negative)"
+    ), "Alphabetical tiers must be defined only through those which are alphabetical (positive) \
+        or only through those that are not alphabetical (negative)"
     return args
 
 
@@ -137,9 +148,11 @@ acks = [[] for i in range(nt)]
 
 # let's go through each author
 for i, author in tbl.iterrows():
+    tier = author["Tier"] - 1
+    if tier == -1:
+        continue
     # replace spaces in author names with ~ to ensure there are no line breaks
     n = author["name"].replace("\\ ", " ").replace(" ", "~")
-    tier = author["Tier"] - 1
     # orcid linking
     if author["ORCID"]:
         o = author["ORCID"].split("/")[-1]
@@ -152,7 +165,7 @@ for i, author in tbl.iterrows():
     # find last name according to specified rules
     idx = last_name_index(n)
     last_names[tier].append(n.split("~")[idx])
-    affil = format_affiliation(author["affiliation"])
+    affil = format_affiliation(author["affiliation"], args.journal)
     # account for a few weird characters and split multiple affiliations
     affils[tier].append(
         affil.strip().replace("  ", " ").replace(" &", " \&").split(";")
@@ -209,15 +222,16 @@ with open(args.output, "w") as afile:
                 affiliation_list.append(aff)
         iaff = ",".join([str(i) for i in iaff])
         names[i] = f"{names[i]}\inst{{{iaff}}}"
-        # print(f"\\and {line}", file=afile)
-    # print("}\n", file=afile)
-    print("\\author{", file=afile)
-    print("\n\\and ".join(names), file=afile)
-    print("}\n", file=afile)
-    # this is also A&A specifi
-    print("\institute{", file=afile)
-    print("\n\\and ".join(affiliation_list), file=afile)
-    print("}", file=afile)
+    if args.journal == "aap":
+        print("\\author{", file=afile)
+        print("\n\\and ".join(names), file=afile)
+        print("}\n", file=afile)
+        # this is also A&A specifi
+        print("\institute{", file=afile)
+        print("\n\\and ".join(affiliation_list), file=afile)
+        print("}", file=afile)
+    for name in names:
+        print(name[28 : name.index("\\inst") - 1].replace("~", " "), end=", ")
 print()
 
 # write acknowledgements
