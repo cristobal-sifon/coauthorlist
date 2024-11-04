@@ -63,6 +63,7 @@ def parse_args():
         "-a",
         nargs="*",
         default=[-1],
+        type=int,
         help="""Which tiers to sort alphabetically,counting from 1.
 Negative numbers indicate which tiers *not* to sort alphabetically.
 Default  (-1) means to sort all tiers except the first.""",
@@ -86,6 +87,7 @@ Default  (-1) means to sort all tiers except the first.""",
         help="filename to write acknowledgement list (default acknowledgements.tex)",
     )
     args = parser.parse_args()
+    print(args.alphabetical)
     assert np.all(np.array(args.alphabetical) < 0) or np.all(
         np.array(args.alphabetical) > 0
     ), "Alphabetical tiers must be defined only through those which are alphabetical (positive) or only through those that are not alphabetical (negative)"
