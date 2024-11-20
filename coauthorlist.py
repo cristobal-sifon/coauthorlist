@@ -97,7 +97,6 @@ Default  (-1) means to sort all tiers except the first.""",
         help="filename to write acknowledgement list (default acknowledgements.tex)",
     )
     args = parser.parse_args()
-    print(args.alphabetical)
     assert np.all(np.array(args.alphabetical) < 0) or np.all(
         np.array(args.alphabetical) > 0
     ), "Alphabetical tiers must be defined only through those which are alphabetical (positive) \
@@ -120,6 +119,7 @@ else:
         """
 **Note**: using custom \\orcid macro. Please add the following to your tex file:
     \\newcommand{\\orcid}[2]{\href{https://orcid.org/#1}{#2}}
+
 """
     )
 # read the data with some flexibility
@@ -134,6 +134,7 @@ tbl = rename_columns(tbl)
 # is there more than one tier?
 if "Tier" in tbl.columns:
     tiers = np.unique(tbl["Tier"])
+    tiers = tiers[tiers != 0]
     nt = tiers.size
     print(f"Found {nt} tiers")
 else:
@@ -230,8 +231,26 @@ with open(args.output, "w") as afile:
         print("\institute{", file=afile)
         print("\n\\and ".join(affiliation_list), file=afile)
         print("}", file=afile)
-    for name in names:
-        print(name[28 : name.index("\\inst") - 1].replace("~", " "), end=", ")
+print("Plain-text author list:")
+for name in names:
+    if args.orcidlink:
+        start = 0
+        if "orcidlink" in name:
+            end = name.index("\\orcidlink")
+        else:
+            end = 0
+    else:
+        end = name.index("\\inst")
+        if "\\orcid" in name:
+            # remove "\orcid{...}{" (the argument always has 19 characters)
+            start = 28
+            # remove "}"
+            end -= 1
+        else:
+            # no need to remove anything beyond the affiliation superscript
+            start = 0
+    print(name[start:+end].replace("~", " "), end=", ")
+
 print()
 
 # write acknowledgements
