@@ -186,6 +186,7 @@ for i, author in tbl.iterrows():
     if len(ack) == 0:
         acks[tier].append("%")
     else:
+        ack = ack.strip()
         if ack[-1] != ".":
             ack = f"{ack}."
         # inefficient but whatever
