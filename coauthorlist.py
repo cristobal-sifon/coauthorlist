@@ -5,7 +5,18 @@ import numpy as np
 ### Modify these ###
 
 # comment this line if there are no acknowledgements other than the authors' ones
-general_acknowledgements = "We thank Jakob Dietl for sharing the eROSITA contours for the Abell 3651/3667 system."
+# this should be a two-element list: the first element will be printed at the beginning
+# of the acknowledgements (e.g., thanking people) while the second one will be printed at the end
+# (e.g., survey acknowledgements). If there is only one element it will be interpreted as the former
+general_acknowledgements = [
+    "We thank Jakob Dietl for sharing the eROSITA contours for the Abell 3651/3667 system.",
+    "This work has been undertaken in the framework of the 4MOST collaboration (\\url{https://www.4most.eu/cms/home/})",
+]
+# leave this, it is to ensure consistency
+if isinstance(general_acknowledgements, str):
+    general_acknowledgements = [general_acknowledgements]
+if len(general_acknowledgements) == 1:
+    general_acknowledgements.append("")
 
 
 def rename_columns(tbl):
@@ -177,6 +188,14 @@ for i, author in tbl.iterrows():
     else:
         if ack[-1] != ".":
             ack = f"{ack}."
+        # inefficient but whatever
+        bad_underscores = []
+        for i, a in enumerate(ack[1:], 1):
+            if a == "_" and ack[i - 1] != "\\":
+                bad_underscores.append(i)
+        # run backwards so indexing is preserved when inserting characters
+        for i in bad_underscores[::-1]:
+            ack = f"{ack[:i]}\\{ack[i:]}"
         acks[tier].append(ack)
 
 # sort alphatically by last name (except Tier 1)
@@ -255,6 +274,6 @@ print()
 
 # write acknowledgements
 with open("acknowledgements.tex", "w") as ackfile:
-    if general_acknowledgements:
-        print(general_acknowledgements, file=ackfile)
+    print(general_acknowledgements[0], file=ackfile)
     print("\n".join(acks), file=ackfile)
+    print(general_acknowledgements[1], file=ackfile)
