@@ -10,7 +10,13 @@ import numpy as np
 # (e.g., survey acknowledgements). If there is only one element it will be interpreted as the former
 general_acknowledgements = [
     "We thank Jakob Dietl for sharing the eROSITA contours for the Abell 3651/3667 system.",
-    "This work has been undertaken in the framework of the 4MOST collaboration (\\url{https://www.4most.eu/cms/home/})",
+    "This work made use of Astropy: a community-developed core Python package and an ecosystem of tools and resources for astronomy \
+\\citep[\\url{http://www.astropy.org}]{AstropyCollaboration2013, AstropyCollaboration2018, AstropyCollaboration2022}. \
+This work has benefited from open-source software including Matplotlib \\citep[\\url{https://matplotlib.org/}]{Hunter2007}, \
+NumPy \\citep[\\url{https://numpy.org/}]{Harris2020}, \
+SciPy \\citep[\\url{https://scipy.org/}]{Virtanen2020}, \
+and Pandas \\citep[\\url{https://pandas.pydata.org/}]{Mckinney-proc-scipy-2010,Team2024}. \
+This work has been undertaken in the framework of the 4MOST collaboration (\\url{https://www.4most.eu/cms/home/}).",
 ]
 # leave this, it is to ensure consistency
 if isinstance(general_acknowledgements, str):
